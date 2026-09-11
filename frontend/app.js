@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessage = document.getElementById('errorMessage');
 
     // Endpoint FastAPI (sesuaikan port jika berbeda)
-    const API_URL = 'http://localhost:8080/predict';
+    const API_URL = 'https://farhanangga89-ai-image-detection.hf.space';
 
     // Event Listener untuk memunculkan preview gambar saat file dipilih
     imageInput.addEventListener('change', function() {
