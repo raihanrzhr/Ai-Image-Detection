@@ -38,7 +38,7 @@
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center">
             
             <!-- Kolom Kiri: Header & Form Upload -->
-            <div class="md:col-span-6 flex flex-col justify-center space-y-6">
+            <div class="md:col-span-7 flex flex-col justify-center space-y-6">
                 <div>
                     <!-- Header Badge & Judul -->
                     <div class="mb-6">
@@ -50,7 +50,7 @@
                             Deteksi Gambar
                         </h1>
                         <p class="text-sm text-slate-400 mt-2 leading-relaxed">
-                            Unggah gambar untuk dianalisis oleh model klasifikasi AI. Sistem akan mendeteksi kelas dan menyajikan persentase tingkat keyakinan (confidence) secara instan.
+                            Unggah gambar untuk dianalisis oleh model klasifikasi AI. Sistem akan mendeteksi kelas secara instan.
                         </p>
                     </div>
 
@@ -100,32 +100,31 @@
             </div>
 
             <!-- Kolom Kanan: Hasil & Placeholder -->
-            <div class="md:col-span-6 flex flex-col justify-center space-y-4 min-h-[320px]">
+            <div class="md:col-span-5 flex flex-col justify-center space-y-4 min-h-[320px]">
                 
                 <!-- Area Hasil Prediksi (Disembunyikan secara default) -->
-                <div id="resultContainer" class="hidden bg-gradient-to-b from-slate-900/80 to-slate-900/40 border border-slate-800/80 rounded-2xl p-5 shadow-xl relative overflow-hidden">
-                    <div class="absolute -top-10 -right-10 w-24 h-24 rounded-full bg-indigo-500/10 blur-xl pointer-events-none"></div>
+                <div id="resultContainer" class="hidden bg-gradient-to-b from-slate-900/80 to-slate-900/40 border border-slate-800/80 rounded-2xl p-6 md:p-8 shadow-xl relative overflow-hidden flex flex-col items-center justify-center text-center min-h-[260px]">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-indigo-500/10 blur-xl pointer-events-none"></div>
+                    <div class="absolute -bottom-10 -left-10 w-32 h-32 rounded-full bg-indigo-600/10 blur-xl pointer-events-none"></div>
                     
-                    <h3 class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-4 flex items-center gap-1.5">
+                    <h3 class="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-6 flex items-center justify-center gap-2 bg-indigo-500/10 border border-indigo-500/20 px-3.5 py-1.5 rounded-full">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         Hasil Analisis
                     </h3>
                     
-                    <div class="space-y-3.5">
-                        <div class="flex justify-between items-center py-2 border-b border-slate-800/60">
-                            <span class="text-sm text-slate-455 font-medium">Prediksi Kelas:</span>
-                            <span id="resultClass" class="text-sm font-bold text-indigo-350 bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 rounded-full uppercase tracking-wide">-</span>
-                        </div>
-                        <div class="flex justify-between items-center py-2">
-                            <span class="text-sm text-slate-455 font-medium">Confidence:</span>
-                            <span id="resultConfidence" class="text-sm font-extrabold text-slate-100 bg-slate-800/80 px-3 py-1 rounded-full">-</span>
+                    <div class="flex flex-col items-center space-y-3 my-2 w-full">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Prediksi Kelas</span>
+                        <div class="px-6 py-3.5 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 shadow-lg shadow-indigo-500/5 min-w-[180px]">
+                            <span id="resultClass" class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-indigo-100 to-indigo-400 uppercase tracking-wider">
+                                -
+                            </span>
                         </div>
                     </div>
 
                     <!-- Pesan Error -->
-                    <p id="errorMessage" class="hidden mt-3 text-xs text-rose-450 font-semibold bg-rose-500/10 border border-rose-500/20 rounded-xl p-3"></p>
+                    <p id="errorMessage" class="hidden mt-4 text-xs text-rose-400 font-semibold bg-rose-500/10 border border-rose-500/20 rounded-xl p-3 w-full"></p>
                 </div>
 
                 <!-- Placeholder (Ditampilkan secara default, disembunyikan via CSS jika resultContainer aktif) -->

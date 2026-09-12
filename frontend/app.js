@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const resultContainer = document.getElementById('resultContainer');
     const resultClass = document.getElementById('resultClass');
-    const resultConfidence = document.getElementById('resultConfidence');
+    // const resultConfidence = document.getElementById('resultConfidence');
     const errorMessage = document.getElementById('errorMessage');
 
     // Endpoint FastAPI
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Asumsi respons FastAPI berbentuk: {"class": "Real", "confidence": "98.5%"}
             // Sesuaikan properti JSON ini dengan format yang Anda return di main.py nanti
             resultClass.textContent = data.class;
-            resultConfidence.textContent = data.confidence;
+            // resultConfidence.textContent = data.confidence;
 
         } catch (error) {
             console.error('Error saat melakukan prediksi:', error);
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Tampilkan error di UI
             resultContainer.classList.remove('hidden');
             resultClass.textContent = '-';
-            resultConfidence.textContent = '-';
+            // resultConfidence.textContent = '-';
             errorMessage.textContent = 'Gagal menghubungi server. Pastikan backend FastAPI sedang berjalan.';
             errorMessage.classList.remove('hidden');
         } finally {
