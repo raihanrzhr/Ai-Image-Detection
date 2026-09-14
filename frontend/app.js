@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('uploadForm');
     const imageInput = document.getElementById('imageInput');
+    const uploadZone = document.getElementById('uploadZone');
+    const uploadLabel = uploadZone ? uploadZone.querySelector('label') : null;
     const previewContainer = document.getElementById('previewContainer');
     const imagePreview = document.getElementById('imagePreview');
     const submitBtn = document.getElementById('submitBtn');
@@ -13,22 +15,67 @@ document.addEventListener('DOMContentLoaded', () => {
     // Endpoint FastAPI
     const API_URL = 'https://farhanangga89-ai-image-detection.hf.space/predict';
 
-    // Event Listener untuk memunculkan preview gambar saat file dipilih
+    // Fungsi terpusat untuk memproses dan menampilkan preview gambar
+    function processFile(file) {
+        if (!file || !file.type.startsWith('image/')) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imagePreview.src = e.target.result;
+            previewContainer.classList.remove('hidden');
+            
+            // Reset area hasil setiap kali gambar baru dipilih
+            resultContainer.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // Event Listener untuk memunculkan preview gambar saat file dipilih lewat tombol
     imageInput.addEventListener('change', function() {
         const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imagePreview.src = e.target.result;
-                previewContainer.classList.remove('hidden');
-                
-                // Reset area hasil setiap kali gambar baru dipilih
-                resultContainer.classList.add('hidden');
-                errorMessage.classList.add('hidden');
-            }
-            reader.readAsDataURL(file);
-        }
+        processFile(file);
     });
+
+    // Implementasi Fitur Drag & Drop
+    if (uploadLabel) {
+        // Efek visual saat file diseret di atas area upload
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadLabel.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadLabel.classList.add('border-indigo-500', 'bg-slate-800/60');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadLabel.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadLabel.classList.remove('border-indigo-500', 'bg-slate-800/60');
+            }, false);
+        });
+
+        // Tangani event drop file
+        uploadLabel.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files && files.length > 0) {
+                const file = files[0];
+                if (file.type.startsWith('image/')) {
+                    // Sync dengan elemen input file
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    imageInput.files = dataTransfer.files;
+
+                    processFile(file);
+                }
+            }
+        });
+    }
+
+    // Cegah perilaku default browser (membuka gambar di tab baru saat dropped di luar dropzone)
+    window.addEventListener('dragover', (e) => e.preventDefault(), false);
+    window.addEventListener('drop', (e) => e.preventDefault(), false);
 
     // Event Listener untuk mengganti dan menghapus gambar
     const changeImageBtn = document.getElementById('changeImageBtn');
